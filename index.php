@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/funciones";
+require_once __DIR__ . "/funciones.php";
 
 $vista = $_GET["vista"] ? $_GET["vista"] : "INICIAR_SESION";
 
@@ -16,10 +16,10 @@ if ($vista !== "PRINCIPAL" && isset($_SESSION["id"])) {
 
 switch ($vista) {
     case 'PRINCIPAL':
-        require_once __DIR__ . "/server/php/principal/principal.php";
+        require_once __DIR__ . "/server/php/vistas/principal.php";
     break;
     case 'INICIAR_SESION':
-        require_once __DIR__ . "/server/php/iniciar-sesion/ingresar.php";
+        require_once __DIR__ . "/server/php/vistas/pagina-iniciar-sesion.php";
     break;
     default:
     echo "Vista no encontrada";

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>MORPHI</title>
 </head>
 <body>
     <header>
         <h1> <img src="" alt=""></h1>
     </header>
     <nav>
-        <a href="#"></a>
+        <a href="server/php/iniciar-sesion/cerrar-sesion.php">Cerrar Sesion</a>
         <a href="#"></a>
         <a href="#"></a>
         <a href="#"></a>
