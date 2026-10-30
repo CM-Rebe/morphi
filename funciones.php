@@ -12,14 +12,14 @@ function conexion() {
 
 function mostrar_error() {
     function crear_error($error,$mensaje) {
-        return "
+        echo "
             <h2>Error $error</h2>
             <p>$mensaje</p>
         ";
     }
 
-    $error = $_GET["error"] ?? "";
-    if ($error !== "") {
+    $error = $_GET["error"] ?? null;
+    if (isset($error)) {
         return;
     }
     switch ($error) {
@@ -33,7 +33,7 @@ function mostrar_error() {
             crear_error($error,"no estás autorizado para ingresar a esta cuenta");
         break;     
         default:
-        
+            
         break;
     }
 }

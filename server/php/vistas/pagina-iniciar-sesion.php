@@ -25,9 +25,7 @@
             </section>
             <?php
                 require_once __DIR__ . "/../../../funciones.php";
-                $error = $_GET["error"] ?? "";
-                mostrar_error("", "
-                no ha completado alguno de los formularios requeridos");
+                mostrar_error();
             ?>
             <button type="submit">Enviar</button>
         </form>
