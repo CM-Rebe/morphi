@@ -18,8 +18,8 @@ function mostrar_error() {
         ";
     }
 
-    $error = $_GET["error"] ?? null;
-    if (isset($error)) {
+    $error = $_GET["error"] ?? "";
+    if ($error !== "") {
         return;
     }
     switch ($error) {
