@@ -30,7 +30,7 @@ function mostrar_error() {
             crear_error($error,"no estás autorizado para ingresar a esta cuenta");
         break;
         case '404':
-            
+            crear_error($error,"no estás autorizado para ingresar a esta cuenta");
         break;     
         default:
         
