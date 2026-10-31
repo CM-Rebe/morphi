@@ -1,0 +1,33 @@
+.contenedor {
+  width: 90%;
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+}
+
+.texto-centro {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-centro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-entre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+  gap: var(--espacio-md);
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }

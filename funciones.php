@@ -2,6 +2,8 @@
 
 session_start();
 
+//FUNCIONES PARA LA BASE DE DATOS
+
 function conexion() {
     $pdo = new PDO('mysql:host=localhost;dbname=sistemas_operativos_clase_30_morphi;charset=utf8mb4', 'root', '', [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -9,6 +11,24 @@ function conexion() {
     ]);
     return $pdo;
 }
+
+function consulta($sql,$bindParam) {
+
+    $pdo = conexion();
+    $stmt = $pdo->prepare($sql);
+
+    if (isset($bindParam)) {
+        foreach ($bindParam as $key => $value) {
+            $stmt->bindParam($key+1,$value);
+        }
+    }
+
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}
+
+//FUNCIONES DE ERRORES
 
 function mostrar_error() {
     function crear_error($error,$mensaje) {
@@ -19,12 +39,14 @@ function mostrar_error() {
     }
 
     $error = $_GET["error"] ?? null;
+
     if (!isset($error)) {
         return;
     }
+
     switch ($error) {
         case '400':
-            crear_error($error,"no se encontró la persona");
+            crear_error($error,"faltan completar datos o no son los esperados");
         break;
         case '401':
             crear_error($error,"no estás autorizado para ingresar a esta cuenta");
@@ -32,11 +54,10 @@ function mostrar_error() {
         case '404':
             crear_error($error,"no estás autorizado para ingresar a esta cuenta");
         break;     
-        default:
-            
-        break;
     }
 }
+
+//FUNCIONES DE AFECTAR CADENAS
 
 function verificar_datos($filtro, $cadena){
     return !preg_match("/^".$filtro."$/u", $cadena);
@@ -53,3 +74,4 @@ function sacar_barras($cadena){
 function sacar_espacios($cadena){
     return trim($cadena);
 }
+

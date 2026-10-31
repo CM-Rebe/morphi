@@ -1,0 +1,33 @@
+:root {
+  /* Tipografía */
+  --fuente-titulos: Georgia, "Times New Roman", serif;
+  --fuente-texto: "Helvetica Neue", Arial, sans-serif;
+
+  --texto-xs: 0.8rem;
+  --texto-sm: 0.95rem;
+  --texto-base: 1rem;
+  --texto-lg: 1.3rem;
+  --texto-xl: 1.6rem;
+  --texto-2xl: 2.6rem;
+
+  /* Espaciado */
+  --espacio-xs: 0.5rem;
+  --espacio-sm: 1rem;
+  --espacio-md: 1.75rem;
+  --espacio-lg: 3rem;
+  --espacio-xl: 5rem;
+
+  /* Bordes */
+  --radio-md: 10px;
+  --radio-lg: 16px;
+
+  /* Sombras */
+  --sombra-suave: 0 4px 14px rgba(47, 45, 42, 0.07);
+  --sombra-media: 0 12px 28px rgba(47, 45, 42, 0.14);
+
+  /* Transiciones */
+  --transicion: 0.35s ease;
+
+  /* Ancho máximo */
+  --ancho-max: 1140px;
+}

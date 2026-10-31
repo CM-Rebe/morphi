@@ -1,0 +1,29 @@
+:root {
+  /* Blancos */
+  --blanco: #ffffff;
+  --blanco-hueso: #fbf9f5;
+  --crema: #f4ede3;
+
+  /* Marrones claros */
+  --marron-claro: #dccab4;
+  --marron-medio: #b8996f;
+  --marron-oscuro: #8c6d4a;
+  --marron-cafe: #5a4430;
+
+  /* Grises */
+  --gris-claro: #e9e6e1;
+  --gris-medio: #a9a49c;
+  --gris-oscuro: #615d57;
+  --gris-carbon: #2f2d2a;
+
+  /* Uso semántico */
+  --color-fondo: var(--blanco-hueso);
+  --color-fondo-alt: var(--crema);
+  --color-texto: var(--gris-carbon);
+  --color-texto-suave: var(--gris-oscuro);
+  --color-acento: var(--marron-medio);
+  --color-acento-oscuro: var(--marron-oscuro);
+  --color-titulo: var(--marron-cafe);
+  --color-borde: var(--gris-claro);
+  --color-tarjeta: var(--blanco);
+}

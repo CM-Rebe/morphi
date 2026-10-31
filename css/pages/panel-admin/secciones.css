@@ -1,0 +1,32 @@
+.seccion {
+  padding: var(--espacio-xl) 0;
+  background-color: var(--color-fondo);
+}
+
+.seccion-alt {
+  background-color: var(--color-fondo-alt);
+}
+
+.titulo-seccion {
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: var(--color-titulo);
+}
+
+.linea-decorativa {
+  width: 70px;
+  height: 2px;
+  margin: var(--espacio-sm) auto var(--espacio-lg);
+  background-color: var(--color-acento);
+  border-radius: 2px;
+}
+
+/* Subtítulos dentro de una sección (ej: Sin alcohol / Con alcohol) */
+h3.texto-centro {
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-acento-oscuro);
+}

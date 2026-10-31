@@ -10,12 +10,12 @@ if (!isset($rol) || !isset($clave)) {
     exit();
 }
 
-if (verificar_datos("[a-zA-z0-9]{4,20}",$rol) === true) {
+if (verificar_datos("[a-zA-z0-9]{4,20}", $rol) === true) {
     header("Location: ../../../index.php?vista=INICIAR_SESION&error=400");
     exit();
 }
 
-if (verificar_datos("[a-zA-z0-9]{4,20}",$clave) === true) {
+if (verificar_datos("[a-zA-z0-9]{4,20}", $clave) === true) {
     header("Location: ../../../index.php?vista=INICIAR_SESION&error=400");
     exit();
 }
@@ -23,27 +23,39 @@ if (verificar_datos("[a-zA-z0-9]{4,20}",$clave) === true) {
 $pdo = conexion();
 
 $stmt = $pdo->prepare("SELECT r.nombre,u.clave FROM usuarios u INNER JOIN roles r ON r.rolesID = u.rolesID WHERE r.nombre = :rol");
-$stmt->bindParam(":rol",$rol);
+$stmt->bindParam(":rol", $rol);
 $stmt->execute();
 
-$usuario = $stmt->fetch() ?? "";
+$usuario = $stmt->fetch() ?? null;
 
-if (isset($usuario) && $usuario !== "") {
+if (isset($usuario)) {
 
-    if (password_verify($clave,$usuario["clave"])) {
-        $_SESSION["id"] = $rol;
-        header("Location: ../../../index.php?vista=PRINCIPAL");
-        exit();
-    }
-    else {
+    if (password_verify($clave, $usuario["clave"])) {
+
+        $_SESSION["rol"] = $rol;
+        echo "Entré";
+        switch ($rol) {
+            case "mozo":
+                header("Location: ../../../index.php?vista=MOZO");
+                exit();
+            break;
+            case "chef":
+                header("Location: ../../../index.php?vista=CHEF");
+                exit();
+            break;
+            case "admin":
+                header("Location: ../../../index.php?vista=ADMIN");
+                exit();
+            break;
+            default:
+                header("Location: ../../../index.php?vista=INICIAR_SESION");
+                exit();
+            break;
+        }
+    } else {
         header("Location: ../../../index.php?vista=INICIAR_SESION&error=401");
         exit();
     }
 }
-else {
-    header("Location: ../../../index.php?vista=INICIAR_SESION&error=404");
-    exit();
-}
 
-header("Location: ../../../index.php?vista=INICIAR_SESION");
-?>
+header("Location: ../../../index.php?vista=INICIAR_SESION&error=404");

@@ -1,0 +1,14 @@
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+
+  h2 { font-size: 2.1rem; }
+  .seccion { padding: var(--espacio-lg) 0; }
+}
+
+@media (max-width: 600px) {
+  .grid-2,
+  .grid-3 { grid-template-columns: 1fr; }
+
+  h2 { font-size: 1.8rem; }
+  .linea-decorativa { margin-bottom: var(--espacio-md); }
+}

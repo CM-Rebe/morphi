@@ -1,0 +1,93 @@
+/* Configuración general del fondo de la página */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #d9d9d9;
+    /* Fondo gris claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Centra verticalmente */
+}
+
+/* Contenedor del formulario (La tarjeta blanca) */
+.login-container {
+    background-color: #ffffff;
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    box-sizing: border-box;
+}
+
+/* Título */
+h1 {
+    text-align: center;
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 40px;
+    color: #000000;
+    font-weight: 900;
+    /* Texto extra grueso */
+}
+
+/* Formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Agrupación de cada campo */
+.campo-grupo {
+    margin-bottom: 25px;
+}
+
+/* Etiquetas (NOMBRE, CONTRASEÑA) */
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    /* Todo en mayúsculas */
+    color: #000000;
+}
+
+/* Inputs y Selects */
+select,
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #d1d1d1;
+    /* Fondo gris de los inputs */
+    border: none;
+    /* Sin bordes */
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* Botón */
+button[type="submit"] {
+    background-color: #4dc2f8;
+    /* Color celeste */
+    color: #000000;
+    padding: 12px 20px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+    align-self: center;
+    /* Centra el botón horizontalmente */
+    min-width: 160px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #3badd6;
+    /* Color un poco más oscuro al pasar el mouse */
+}
