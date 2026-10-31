@@ -1,0 +1,43 @@
+.acciones-tarjeta {
+    display: flex;
+    gap: 10px; /* Separación entre los botones */
+    margin-top: 15px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    font-family: inherit; /* Para que use la fuente de tu proyecto */
+}
+
+.btn:active {
+    transform: scale(0.95); /* Efecto de clic */
+}
+
+/* Botón Editar */
+.btn-editar {
+    background-color: #4dc2f8; /* Celeste que usamos en el login */
+    color: #ffffff;
+}
+
+.btn-editar:hover {
+    background-color: #3badd6;
+}
+
+/* Botón Eliminar */
+.btn-eliminar {
+    background-color: #e74c3c; /* Rojo */
+    color: #ffffff;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
