@@ -15,12 +15,14 @@ $bebidas = consulta("SELECT * FROM bebidas",null);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Restaurante</title>
+  <title>ADMIN</title>
 
+  <link rel="shortcut icon" href="assets/img/logo-morphy.jpg" type="image/x-icon">
+
+  <link rel="stylesheet" href="css/global/selector-universal.css">
   <link rel="stylesheet" href="css/pages/admin/colores.css">
   <link rel="stylesheet" href="css/pages/admin/variables.css">
   <link rel="stylesheet" href="css/pages/admin/header.css">
-  <link rel="stylesheet" href="css/pages/admin/reset.css">
   <link rel="stylesheet" href="css/pages/admin/base.css">
   <link rel="stylesheet" href="css/pages/admin/botones.css">
   <link rel="stylesheet" href="css/pages/admin/utilidades.css">

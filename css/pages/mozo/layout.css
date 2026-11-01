@@ -1,0 +1,31 @@
+body {
+    height: 100%;
+    min-height: 100vh;
+    background-color: var(--fondo-pagina); /* Letra */
+    font-family: Arial, sans-serif; /* Letra */
+}
+
+.contenedor-principal {
+    width: 100%;
+    min-height: 100vh;
+    display: flex; /* Letra */
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: nowrap; /* Letra */
+}
+
+.panel-datos {
+    padding: 40px; /* Numérico */
+    width: 100%; /* Mixto */
+    border-left: 2px solid #ccc; /* Mixto */
+    background-color: var(--fondo-panel); /* Letra */
+    display: flex; /* Letra */
+    justify-content: center;
+    flex-direction: column; /* Letra */
+}
+
+@media (max-width:1000px) {
+    .contenedor-principal {
+        flex-wrap: wrap-reverse;
+    }
+}

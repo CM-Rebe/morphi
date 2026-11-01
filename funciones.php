@@ -17,15 +17,15 @@ function consulta($sql,$bindParam) {
     $pdo = conexion();
     $stmt = $pdo->prepare($sql);
 
-    if (isset($bindParam)) {
-        foreach ($bindParam as $key => $value) {
-            $stmt->bindParam($key+1,$value);
-        }
+    $stmt->execute($bindParam);
+
+    if (verificar_datos("SELECT",$sql)) {
+        return $stmt->fetchAll() ?? null;
     }
-
-    $stmt->execute();
-
-    return $stmt->fetchAll();
+    if (verificar_datos("UPDATE",$sql)) {
+        return $stmt->rowCount() ?? null;
+    }
+    
 }
 
 //FUNCIONES DE ERRORES
@@ -54,6 +54,33 @@ function mostrar_error() {
         case '404':
             crear_error($error,"no estás autorizado para ingresar a esta cuenta");
         break;     
+    }
+}
+
+function mostar_mensaje() {
+    function crear_mensaje($realizacion,$mensaje) {
+        echo "
+            <h2>$realizacion</h2>
+            <p>$mensaje</p>
+        ";
+    }
+
+    $realizacion = $_GET["realizacion"] ?? null;
+
+    if (!isset($realizacion)) {
+        return;
+    }
+
+    switch ($realizacion) {
+        case '1':
+            crear_mensaje("Exito:","pedido agregado con éxito");
+        break;
+        case '2':
+            crear_mensaje("Exito:","pago exitoso");
+        break; 
+        default :
+            crear_mensaje("Fallo:","ha habido un error en la actualización");
+        break;
     }
 }
 

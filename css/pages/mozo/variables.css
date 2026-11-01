@@ -1,0 +1,11 @@
+:root {
+    /* Colores de Estado */
+    --color-verde: #00ff00;
+    --color-amarillo: #ffff00;
+    --color-rojo: #ff0000;
+    
+    /* Colores de Interfaz */
+    --fondo-pagina: #d3d3d3;
+    --fondo-panel: #ffffff;
+    --texto-principal: #000000;
+}

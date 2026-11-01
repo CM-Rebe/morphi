@@ -12,7 +12,7 @@ if ($vista !== "INICIAR_SESION" && !isset($_SESSION["rol"])) {
 if ($vista === "INICIAR_SESION" && isset($_SESSION["rol"])) {
     switch ($_SESSION["rol"]) {
         case "mozo":
-            header("Location: /index.php?vista=MOZO");
+            header("Location: index.php?vista=MOZO");
             exit();
         break;
         case "chef":

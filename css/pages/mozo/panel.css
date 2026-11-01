@@ -1,0 +1,82 @@
+.panel-header {
+    margin-bottom: 40px; /* Numérico */
+    text-align: center; /* Letra */
+}
+
+.panel-header h2 {
+    font-size: 28px; /* Mixto */
+    text-transform: uppercase; /* Letra */
+}
+
+.panel-manual {
+    gap: 30px; /* Mixto */
+    display: flex; /* Letra */
+    flex-direction: column; /* Letra */
+    align-items: center; /* Letra */
+}
+
+.leyenda {
+    width: 100%; /* Mixto */
+    max-width: 300px; /* Mixto */
+    padding: 10px; /* Mixto */
+    font-size: 12px; /* Mixto */
+    display: flex; /* Letra */
+    align-items: center; /* Letra */
+    font-weight: bold; /* Letra */
+    text-align: center;
+    color: #000; /* Letra */
+}
+
+.leyenda-verde { 
+    background-color: var(--color-verde); /* Letra */
+}
+.leyenda-amarilla { 
+    background-color: var(--color-amarillo); /* Letra */
+}
+.leyenda-roja { 
+    background-color: var(--color-rojo); /* Letra */
+}
+
+.panel-acciones {
+    gap: 20px; /* Mixto */
+    display: flex; /* Letra */
+    flex-direction: column; /* Letra */
+    align-items: center; /* Letra */
+}
+
+.mesa-seleccionada {
+    margin-bottom: 20px; /* Numérico */
+    font-size: 18px; /* Mixto */
+    font-weight: bold; /* Letra */
+}
+
+.btn-accion {
+    width: 100%; /* Mixto */
+    max-width: 300px; /* Mixto */
+    padding: 15px; /* Mixto */
+    font-size: 14px; /* Mixto */
+    border: none; /* Letra */
+    font-weight: bold; /* Letra */
+    cursor: pointer; /* Letra */
+    color: #000; /* Letra */
+}
+
+.btn-verde { 
+    background-color: var(--color-verde); /* Letra */
+}
+.btn-amarillo { 
+    background-color: var(--color-amarillo); /* Letra */
+}
+.btn-rojo { 
+    background-color: var(--color-rojo); /* Letra */
+    color: #fff; /* Letra */
+}
+
+.btn-cancelar {
+    margin-top: 30px; /* Numérico */
+    padding: 10px 20px; /* Mixto */
+    border: 1px solid #999; /* Mixto */
+    background: transparent; /* Letra */
+    cursor: pointer; /* Letra */
+    color: #666; /* Letra */
+}
