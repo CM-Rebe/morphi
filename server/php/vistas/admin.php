@@ -2,10 +2,10 @@
 
 require_once __DIR__ . "/../../../funciones.php";
 
-$entradas = consulta("SELECT * FROM entradas",null);
-$platos_principales = consulta("SELECT * FROM platos_principales",null);
-$postres = consulta("SELECT * FROM postres",null);
-$bebidas = consulta("SELECT * FROM bebidas",null);
+$entradas = ejecutar_consulta_sql("SELECT * FROM entradas",null);
+$platos_principales = ejecutar_consulta_sql("SELECT * FROM platos_principales",null);
+$postres = ejecutar_consulta_sql("SELECT * FROM postres",null);
+$bebidas = ejecutar_consulta_sql("SELECT * FROM bebidas",null);
 
 ?>
 

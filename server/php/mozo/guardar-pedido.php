@@ -2,50 +2,80 @@
 
 require_once __DIR__ . "/../../../funciones.php";
 
+//AGRUPACIÓN EN UN ARRAY + LIMPIEZA + NULLIDAD
+
 $pedido = [
     //ID DE MESA
-    "mesasID" => limpiar_cadena($_POST["mesasID"]) ?? null,
-    //ENTRADAS & PLATOS PRINCIPALES
-    "comida" => limpiar_cadena($_POST["comida"]) ?? "",
-    "cantidad_comida" => limpiar_cadena($_POST["cantidad_comida"]) ?? "",
+    "mesasID" => limpiar_cadena($_POST["mesasID"] ?? null),
+    //ENTRADAS
+    "id_entrada" => limpiar_cadena($_POST["id_entrada"] ?? null),
+    "cantidad_entrada" => limpiar_cadena($_POST["cantidad_entrada"] ?? null),
+    //PLATOS PRINCIPALES
+    "id_plato_principal" => limpiar_cadena($_POST["id_plato_principal"]  ?? null),
+    "cantidad_plato_principal" => limpiar_cadena($_POST["cantidad_plato_principal"] ?? null),
     //BEBIDAS
-    "bebida" => limpiar_cadena($_POST["bebida"]) ?? "",
-    "cantida_bebida" => limpiar_cadena($_POST["cantidad_bebida"]) ?? "",
+    "id_bebida" => limpiar_cadena($_POST["id_bebida"] ?? null),
+    "cantidad_bebida" => limpiar_cadena($_POST["cantidad_bebida"] ?? null),
     //POSTRES
-    "postre" => limpiar_cadena($_POST["postre"]) ?? "",
-    "cantidad_postre" => limpiar_cadena($_POST["cantidad_postre"]) ?? "",
+    "id_postre" => limpiar_cadena($_POST["id_postre"] ?? null),
+    "cantidad_postre" => limpiar_cadena($_POST["cantidad_postre"] ?? null),
     //ESPECIFICACIONES
-    "especificaciones" => limpiar_cadena($_POST["especificaciones"]) ?? ""
+    "especificaciones" => limpiar_cadena($_POST["especificaciones"] ?? null)
 ];
 
-//VER NULL
+//Que pasa
 
-foreach ($pedido as $pedido_valor_foreach) {
-    if (!isset($pedido_valor_foreach)) {
-        header("Location: ../../../index.php?vista=MOZO&resultado=fallo");
-        exit();
-    }
+//Si uno es null, normalmente se descarta el pedido
+//Pero si especificaciones (ejemplo) es null, no quiero
+//que se me descarte el pedido ya que algunos pueden ordenar
+//todo normal
+
+//La definición de qué es lo mínimo para un pedido es:
+
+//QUE MESASID NO SEA NULL
+//QUE UNO DE LOS PEDIDOS NO SEA NULL
+//QUE EN ESE PEDIDO SU CANTIDAD NO SEA NULL U 0(cero)
+
+if (!isset($pedido["mesasID"])) {
+    header("Location: ../../../index.php?vista=MOZO&&resultado=valores-faltantes");
+    exit();
+}
+
+$id_mesa = $pedido["mesasID"];
+
+$hay_entrada = !empty($pedido["id_entrada"]) && !empty($pedido["cantidad_entrada"]);
+$hay_plato_principal   = !empty($pedido["id_plato_principal"]) && !empty($pedido["cantidad_plato_principal"]);
+$hay_bebida  = !empty($pedido["id_bebida"]) && !empty($pedido["cantidad_bebida"]);
+$hay_postre  = !empty($pedido["id_postre"]) && !empty($pedido["cantidad_postre"]);
+
+if (!$hay_entrada && !$hay_plato_principal && !$hay_bebida && !$hay_postre) {
+    header("Location: ../../../index.php?vista=MOZO&mesa=$id_mesa&resultado=valores-faltantes");
+    exit();
 }
 
 //CALCULAR TOTAL DEL PEDIDO
 
-$total = ejecutar_consulta_sql("SELECT SUM(E.precio + platos_principales.precio + B.precio + postres.precio) FROM detalle_ordenes D 
-        INNER JOIN entradas E
-        ON E.entradasID = D.entradasID
-        INNER JOIN platos_principales
-        ON platos_principales.platos_principalesID = D.platos_principalesID
-        INNER JOIN bebidas B
-        ON B.bebidasID = D.bebidasID
-        INNER JOIN postres
-        ON postres.postresID = D.postresID",null);
+$total = 0;
+
+if ($hay_entrada) {
+    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_entrada"]]);
+}
+
+if ($hay_plato_principal) {
+    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_plato_principal"]]);
+}
+
+if ($hay_bebida) {
+    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_bebida"]]);
+}
 
 $pdo = conexion();
 
 $stmt = $pdo->prepare("INSERT INTO detalle_ordenes (entradasID,
-platos_principalesID,bebidasID,postresID,especificaciones) 
+platos_principalesID,bebidasID,postresID,total,especificaciones) 
 VALUES (?,?,?,?,?)");
 
-$stmt->execute([$total,$pedido["especificaciones"]]);
+$stmt->execute([$pedido["id_entrada"],$pedido["id_plato_principal"],$pedido["id_bebida"],$pedido["id_postre"],$total,$pedido["especificaciones"]]);
 
 //OBTENEMOS EL ID PARA INSERTARLO EN LA ORDEN
 $insertar_detalle_de_orden = $pdo->lastInsertId();

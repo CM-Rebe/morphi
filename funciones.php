@@ -86,6 +86,9 @@ function mostar_mensaje() {
         case 'fallo':
             crear_mensaje("Fallo:","ha habido un error en la actualización");
         break;
+        case 'valores-faltantes':
+            crear_mensaje("Fallo:","no se ha podido añadir el pedido debido a campos incompletos");
+        break;
     }
 }
 
