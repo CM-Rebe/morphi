@@ -12,23 +12,25 @@ function conexion() {
     return $pdo;
 }
 
-function consulta($sql,$bindParam) {
+function ejecutar_consulta_sql($sql,$bindParam) {
 
     $pdo = conexion();
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute($bindParam);
 
-    if (verificar_datos("SELECT",$sql)) {
-        return $stmt->fetchAll() ?? null;
-    }
-    if (verificar_datos("UPDATE",$sql)) {
+    //Si es UPDATE o DELETE contamos las columnas afectadas
+    if (str_contains($sql,"UPDATE") || str_contains($sql,"DELETE")) {
         return $stmt->rowCount() ?? null;
+    }
+    //Sinó es SELECT o INSERT y agarramos los datos
+    else {
+        return $stmt->fetchAll() ?? null;
     }
     
 }
 
-//FUNCIONES DE ERRORES
+//FUNCIONES DE MENSAJES
 
 function mostrar_error() {
     function crear_error($error,$mensaje) {
@@ -43,7 +45,7 @@ function mostrar_error() {
     if (!isset($error)) {
         return;
     }
-
+    //tipo de error, tipo de mensaje
     switch ($error) {
         case '400':
             crear_error($error,"faltan completar datos o no son los esperados");
@@ -65,20 +67,23 @@ function mostar_mensaje() {
         ";
     }
 
-    $realizacion = $_GET["realizacion"] ?? null;
+    $resultado = $_GET["resultado"] ?? null;
 
-    if (!isset($realizacion)) {
+    if (!isset($resultado)) {
         return;
     }
 
-    switch ($realizacion) {
-        case '1':
+    switch ($resultado) {
+        case 'ordenar_pedido':
             crear_mensaje("Exito:","pedido agregado con éxito");
         break;
-        case '2':
+        case 'ordenar_otro_pedido':
+            crear_mensaje("Exito:","otro pedido agregado con éxito");
+        break;
+        case 'pagar':
             crear_mensaje("Exito:","pago exitoso");
-        break; 
-        default :
+        break;
+        case 'fallo':
             crear_mensaje("Fallo:","ha habido un error en la actualización");
         break;
     }
@@ -102,3 +107,6 @@ function sacar_espacios($cadena){
     return trim($cadena);
 }
 
+function limpiar_cadena($cadena) {
+    return trim(stripslashes(htmlspecialchars($cadena)));
+}

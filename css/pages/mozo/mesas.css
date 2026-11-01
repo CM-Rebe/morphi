@@ -29,9 +29,6 @@
 .mesa-verde { 
     background-color: var(--color-verde); /* Letra */
 }
-.mesa-amarilla { 
-    background-color: var(--color-amarillo); /* Letra */
-}
 .mesa-roja { 
     background-color: var(--color-rojo); /* Letra */
 }

@@ -1,7 +1,7 @@
 <?php 
     require_once __DIR__ . "/../../../funciones.php";
 
-    $ordenes = consulta("SELECT O.mesasID, E.nombre, platos_principales.nombre, B.nombre, postres.nombre ,D.detalle_ordenesID FROM ordenes O 
+    $ordenes = ejecutar_consulta_sql("SELECT O.mesasID, E.nombre, platos_principales.nombre, B.nombre, postres.nombre ,D.especificaciones FROM ordenes O 
         INNER JOIN detalle_ordenes D
         ON O.detalle_ordenesID = D.detalle_ordenesID
         INNER JOIN entradas E
