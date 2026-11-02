@@ -62,8 +62,7 @@ function mostrar_error() {
 function mostar_mensaje() {
     function crear_mensaje($realizacion,$mensaje) {
         echo "
-            <h2>$realizacion</h2>
-            <p>$mensaje</p>
+            <div class='mensaje-exito'><h2>$realizacion</h2><p>$mensaje</p></div>
         ";
     }
 
@@ -75,19 +74,19 @@ function mostar_mensaje() {
 
     switch ($resultado) {
         case 'ordenar_pedido':
-            crear_mensaje("Exito:","pedido agregado con éxito");
+            crear_mensaje("Éxito", "Pedido agregado con éxito. La mesa ahora está ocupada.");
         break;
         case 'ordenar_otro_pedido':
-            crear_mensaje("Exito:","otro pedido agregado con éxito");
+            crear_mensaje("Éxito", "Se agregó otro pedido a la mesa.");
         break;
         case 'pagar':
-            crear_mensaje("Exito:","pago exitoso");
-        break;
-        case 'fallo':
-            crear_mensaje("Fallo:","ha habido un error en la actualización");
+            crear_mensaje("Éxito", "Pago realizado. La mesa ahora está libre.");
         break;
         case 'valores-faltantes':
-            crear_mensaje("Fallo:","no se ha podido añadir el pedido debido a campos incompletos");
+            crear_mensaje("Error", "Faltan datos o no se seleccionó ningún producto.");
+        break;
+        default:
+            crear_mensaje("Error", "Ha ocurrido un error inesperado.");
         break;
     }
 }

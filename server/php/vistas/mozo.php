@@ -120,10 +120,12 @@ $mesa_actual = null;
                     <div class="contenedor-formulario">
                         <h3>Confirmar Pago</h3>
                         <p>¿Estás seguro que la Mesa <?= $mesa_actual["mesasID"] ?> terminó de comer y va a pagar?</p>
-                        <form action="server/php/mozo/actualizar-mesa.php" method="POST">
-                            <p>Abonar: <?php  ?></p>
-                            <button type="submit" class="btn-accion btn-rojo">CONFIRMAR PAGO Y LIBERAR MESA</button>
-                        </form>
+                        <p>Abonar: <?php 
+                        $pdo = conexion();
+                        $stmt = $pdo->prepare("SELECT SUM(total) FROM detalle_ordenes D INNER JOIN ordenes O ON D.detalle_ordenesID = O.detalle_ordenesID WHERE O.mesasID = ? AND estado = 'listo'");
+                        $stmt->execute([$mesa_actual["mesasID"]]);
+                        echo $stmt->fetchColumn(); ?></p>
+                        <a href="server/php/mozo/actualizar-mesa.php?mesa=<?= $mesa_actual["mesasID"] ?>&accion=pagar" class="btn-accion btn-rojo">PAGAR</a>
                     </div>
 
                 <?php else : ?>
@@ -158,7 +160,7 @@ $mesa_actual = null;
                                 <select name="id_plato_principal" id="id_plato_principal">
                                     <option value="">-- Seleccionar (Opcional) --</option>
                                     <?php foreach ($platos as $platos_principales_foreach): ?>
-                                        <option value="platos_principales<?= $platos_principales_foreach['platos_principalesID'] ?>" <?= ($platos_principales_foreach['cantidad'] == 0) ? 'disabled' : '' ?>>
+                                        <option value="<?= $platos_principales_foreach['platos_principalesID'] ?>" <?= ($platos_principales_foreach['cantidad'] == 0) ? 'disabled' : '' ?>>
                                             <?= $platos_principales_foreach['nombre'] ?> - $<?= $platos_principales_foreach['precio'] ?> <?= ($platos_principales_foreach['cantidad'] == 0) ? '(SIN STOCK)' : '' ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -177,7 +179,7 @@ $mesa_actual = null;
                                 <select name="id_bebida" id="id_bebida">
                                     <option value="">-- Seleccionar (Opcional) --</option>
                                     <?php foreach ($bebidas as $b): ?>
-                                        <option value="bebida<?= $b['bebidasID'] ?>" <?= ($b['cantidad'] == 0) ? 'disabled' : '' ?>>
+                                        <option value="<?= $b['bebidasID'] ?>" <?= ($b['cantidad'] == 0) ? 'disabled' : '' ?>>
                                             <?= $b['nombre'] ?> - $<?= $b['precio'] ?> <?= ($b['cantidad'] == 0) ? '(SIN STOCK)' : '' ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -196,7 +198,7 @@ $mesa_actual = null;
                                 <select name="id_postre" id="id_postre">
                                     <option value="">-- Seleccionar (Opcional) --</option>
                                     <?php foreach ($postres as $postres_foreach): ?>
-                                        <option value="postre<?= $postres_foreach['postresID'] ?>" <?= ($postres_foreach['cantidad'] == 0) ? 'disabled' : '' ?>>
+                                        <option value="<?= $postres_foreach['postresID'] ?>" <?= ($postres_foreach['cantidad'] == 0) ? 'disabled' : '' ?>>
                                             <?= $postres_foreach['nombre'] ?> - $<?= $postres_foreach['precio'] ?> <?= ($postres_foreach['cantidad'] == 0) ? '(SIN STOCK)' : '' ?>
                                         </option>
                                     <?php endforeach; ?>

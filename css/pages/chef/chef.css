@@ -1,0 +1,84 @@
+body {
+    padding: 0; /* Numérico */
+    margin: 0; /* Numérico */
+    background-color: #d3d3d3; /* Letra */
+    font-family: Arial, sans-serif; /* Letra */
+}
+
+.contenedor-chef {
+    max-width: 900px; /* Mixto */
+    padding: 30px; /* Numérico */
+    margin: 0 auto; /* Numérico */
+    box-sizing: border-box; /* Letra */
+}
+
+h1 {
+    margin-top: 0; /* Numérico */
+    margin-bottom: 25px; /* Numérico */
+    font-size: 28px; /* Mixto */
+    letter-spacing: 1px; /* Mixto */
+    text-transform: uppercase; /* Letra */
+    color: #000000; /* Letra */
+}
+
+/* ================= LISTA DE PEDIDOS ================= */
+.lista-pedidos {
+    gap: 12px; /* Mixto */
+    display: flex; /* Letra */
+    flex-direction: column; /* Letra */
+}
+
+.tarjeta-pedido {
+    padding: 15px 20px; /* Mixto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Mixto */
+    background-color: #ffffff; /* Letra */
+    display: flex; /* Letra */
+    justify-content: space-between; /* Letra */
+    align-items: center; /* Letra */
+}
+
+.info-pedido {
+    gap: 10px; /* Mixto */
+    display: flex; /* Letra */
+    align-items: baseline; /* Letra */
+}
+
+.info-pedido h2 {
+    margin: 0; /* Numérico */
+    font-size: 18px; /* Mixto */
+    text-transform: uppercase; /* Letra */
+    color: #000000; /* Letra */
+}
+
+.info-pedido .especificaciones {
+    font-size: 14px; /* Mixto */
+    font-weight: bold; /* Letra */
+    color: #555555; /* Letra */
+}
+
+/* ================= BOTÓN LISTO ================= */
+.btn-listo {
+    padding: 10px 20px; /* Mixto */
+    border: none; /* Letra */
+    background-color: #4dc2f8; /* Letra */
+    color: #000000; /* Letra */
+    font-size: 14px; /* Mixto */
+    font-weight: bold; /* Letra */
+    text-transform: uppercase; /* Letra */
+    text-decoration: none; /* Letra */
+    cursor: pointer; /* Letra */
+    transition: background-color 0.2s; /* Letra */
+}
+
+.btn-listo:hover {
+    background-color: #3badd6; /* Letra */
+}
+
+/* ================= MENSAJE VACÍO ================= */
+.sin-pedidos {
+    margin-top: 50px; /* Numérico */
+    font-size: 18px; /* Mixto */
+    font-weight: bold; /* Letra */
+    text-align: center; /* Letra */
+    color: #666666; /* Letra */
+}

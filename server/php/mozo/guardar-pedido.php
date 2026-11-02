@@ -6,19 +6,19 @@ require_once __DIR__ . "/../../../funciones.php";
 
 $pedido = [
     //ID DE MESA
-    "mesasID" => limpiar_cadena($_POST["mesasID"] ?? null),
+    "mesasID" => (empty($_POST["mesasID"]) ? null : (int)$_POST["mesasID"]),
     //ENTRADAS
-    "id_entrada" => limpiar_cadena($_POST["id_entrada"] ?? null),
-    "cantidad_entrada" => limpiar_cadena($_POST["cantidad_entrada"] ?? null),
+    "id_entrada" => (empty($_POST["id_entrada"]) ? null : (int)$_POST["id_entrada"]),
+    "cantidad_entrada" => (empty($_POST["cantidad_entrada"]) ? null : (int)$_POST["cantidad_entrada"]),
     //PLATOS PRINCIPALES
-    "id_plato_principal" => limpiar_cadena($_POST["id_plato_principal"]  ?? null),
-    "cantidad_plato_principal" => limpiar_cadena($_POST["cantidad_plato_principal"] ?? null),
+    "id_plato_principal" => (empty($_POST["id_plato_principal"]) ? null : (int)$_POST["id_plato_principal"]),
+    "cantidad_plato_principal" => (empty($_POST["cantidad_plato_principal"]) ? null : (int)$_POST["cantidad_plato_principal"]),
     //BEBIDAS
-    "id_bebida" => limpiar_cadena($_POST["id_bebida"] ?? null),
-    "cantidad_bebida" => limpiar_cadena($_POST["cantidad_bebida"] ?? null),
+    "id_bebida" => (empty($_POST["id_bebida"]) ? null : (int)$_POST["id_bebida"]),
+    "cantidad_bebida" => (empty($_POST["cantidad_bebida"]) ? null : (int)$_POST["cantidad_bebida"]),
     //POSTRES
-    "id_postre" => limpiar_cadena($_POST["id_postre"] ?? null),
-    "cantidad_postre" => limpiar_cadena($_POST["cantidad_postre"] ?? null),
+    "id_postre" => (empty($_POST["id_postre"]) ? null : (int)$_POST["id_postre"]),
+    "cantidad_postre" => (empty($_POST["cantidad_postre"]) ? null : (int)$_POST["cantidad_postre"]),
     //ESPECIFICACIONES
     "especificaciones" => limpiar_cadena($_POST["especificaciones"] ?? null)
 ];
@@ -36,7 +36,7 @@ $pedido = [
 //QUE UNO DE LOS PEDIDOS NO SEA NULL
 //QUE EN ESE PEDIDO SU CANTIDAD NO SEA NULL U 0(cero)
 
-if (!isset($pedido["mesasID"])) {
+if (empty($pedido["mesasID"])) {
     header("Location: ../../../index.php?vista=MOZO&&resultado=valores-faltantes");
     exit();
 }
@@ -57,28 +57,46 @@ if (!$hay_entrada && !$hay_plato_principal && !$hay_bebida && !$hay_postre) {
 
 $total = 0;
 
+$pdo = conexion();
+
 if ($hay_entrada) {
-    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_entrada"]]);
+    $stmt = $pdo->prepare("SELECT SUM(precio * ?) FROM entradas WHERE entradasID = ?");
+    $stmt->execute([$pedido["cantidad_entrada"], $pedido["id_entrada"]]);
+    $total += $stmt->fetchColumn();
 }
 
 if ($hay_plato_principal) {
-    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_plato_principal"]]);
+    $stmt = $pdo->prepare("SELECT SUM(precio * ?) FROM platos_principales WHERE platos_principalesID = ?");
+    $stmt->execute([$pedido["cantidad_plato_principal"], $pedido["id_plato_principal"]]);
+    $total += $stmt->fetchColumn();
 }
 
 if ($hay_bebida) {
-    $total += ejecutar_consulta_sql("SELECT SUM((precio * ?)) FROM entradas WHERE entradasID = ?",[$pedido["id_bebida"]]);
+    $stmt = $pdo->prepare("SELECT SUM(precio * ?) FROM bebidas WHERE bebidasID = ?");
+    $stmt->execute([$pedido["cantidad_bebida"], $pedido["id_bebida"]]);
+    $total += $stmt->fetchColumn();
 }
 
-$pdo = conexion();
+if ($hay_postre) {
+    $stmt = $pdo->prepare("SELECT SUM(precio * ?) FROM postres WHERE postresID = ?");
+    $stmt->execute([$pedido["cantidad_postre"], $pedido["id_postre"]]);
+    $total += $stmt->fetchColumn();
+}
 
 $stmt = $pdo->prepare("INSERT INTO detalle_ordenes (entradasID,
 platos_principalesID,bebidasID,postresID,total,especificaciones) 
-VALUES (?,?,?,?,?)");
+VALUES (?,?,?,?,?,?)");
 
 $stmt->execute([$pedido["id_entrada"],$pedido["id_plato_principal"],$pedido["id_bebida"],$pedido["id_postre"],$total,$pedido["especificaciones"]]);
 
-//OBTENEMOS EL ID PARA INSERTARLO EN LA ORDEN
+//OBTENEMOS EL ID PARA INSERTARLO EN LA ORDEN PORQUE PUEDE HABER MÁS DE 1 ORDEN IGUAL
+//Y CON ESTA FUNCIÓN NO NECESITAMOS HACER ESO
 $insertar_detalle_de_orden = $pdo->lastInsertId();
 
-$insertar_orden = ejecutar_consulta_sql("INSERT INTO ordenes (mesasID,detalle_ordenesID) 
-VALUES (?,?)",[$pedido["mesasID"],]);
+ejecutar_consulta_sql("INSERT INTO ordenes (mesasID,detalle_ordenesID,estado) 
+VALUES (?,?,'proceso')",[$pedido["mesasID"],$insertar_detalle_de_orden]);
+
+$stmt = $pdo->prepare("UPDATE mesas SET estado = 'ocupado' WHERE mesasID = ?");
+$stmt->execute([$id_mesa]);
+
+header("Location: ../../../index.php?vista=MOZO&mesa=$id_mesa&resultado=ordenar_pedido");
